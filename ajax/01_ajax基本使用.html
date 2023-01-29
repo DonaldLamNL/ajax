@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_ajax基本使用</title>
+    <style>
+        #content{
+            width: 300px;
+            height: 100px;
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>該頁面是測試: ajax基本使用</h3>
+    <button id="btn">發送請求(原生js-ajax-get)</button>  
+    <div id="content"></div>
+    <!-- GET POST PUT DELETE -->
+    <script>
+        // 獲取按鈕
+        const btn = document.getElementById('btn')
+        const content = document.getElementById('content')
+        // 綁定監聽
+        btn.onclick = () => {
+            // 1. 創建xhr實例對象
+            const xhr = new XMLHttpRequest()
+            console.log(xhr.readyState)
+
+            // 4. 綁定監聽（當準備的狀態改變時）
+            /*
+                xhr內部有5種狀態，值分別為：0,1,2,3,4
+                xhr在實例出來的那一刻，狀態就是0
+            */
+            xhr.onreadystatechange = () => {
+                console.log(xhr.readyState)
+                if(xhr.readyState === 4){
+                    console.log(xhr.response)
+                    content.innerHTML = `<h3>${xhr.response}</h3>`
+                }
+            }
+
+            // 2. 指定發送請求的：method、url
+            xhr.open('GET', 'http://127.0.0.1:8080/test_get')
+
+            // 3. 發送請求
+            xhr.send()
+
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_xhr的5種狀態</title>
+    <style>
+        #content{
+            width: 300px;
+            height: 100px;
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>該頁面是測試: xhr的5種狀態</h3>
+    <button id="btn">發送請求(原生js-ajax-get)</button>  
+    <div id="content"></div>
+    <!-- GET POST PUT DELETE -->
+    <script>
+        // 獲取按鈕
+        const btn = document.getElementById('btn')
+        const content = document.getElementById('content')
+        // 綁定監聽
+        btn.onclick = () => {
+            // 1. 創建xhr實例對象
+            const xhr = new XMLHttpRequest()
+            console.log(xhr.readyState)
+
+            // 4. 綁定監聽（當準備的狀態改變時）
+            /*
+                xhr內部有5種狀態，值分別為：0,1,2,3,4
+                    0 - 實例出來的那一刻（初始狀態）
+                    1 - open已經調用了，但是send還沒有調用，此時可以修改請求頭內容
+                    2 - send已經調用了，已經無法修改請求頭
+                    3 - 已經回來一部分數據了，小的數據會在此階段一次性接收完畢，較大的數據有待進一步接收，響應頭一定回來了
+                    4 - 數據全部接收完畢
+            */
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState === 1){
+                    xhr.setRequestHeader('demo',123)    // 配置請求頭
+                }
+                if(xhr.readyState === 2){
+                    // xhr.setRequestHeader('demo',123)    // 設置請求頭 —— 報錯
+                }
+                if(xhr.readyState === 3){
+                    console.log('@ 3時接收到的數據 @', xhr.response)
+                    console.log('@ 3時候接收到的響應頭 @', xhr.getResponseHeader('content-length'))
+                }
+                if(xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)){
+                    console.log(xhr.response)
+                    content.innerHTML = `<h3>${xhr.response}</h3>`
+                }
+            }
+
+            // 2. 指定發送請求的：method、url
+            xhr.open('GET', 'http://127.0.0.1:8080/test_get')
+
+            // 3. 發送請求
+            xhr.send()
+
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06_fatch二次封裝</title>
+</head>
+<body>
+    <script>
+
+        async function http({method, url, params, data}){
+            // params 需要轉換成 key=value&key=value 的形式
+            if(params){
+                // 固定寫法： new URLSearchParams(params).toString()
+                let str = new URLSearchParams(params).toString()
+                // 拼接到 url
+                url += '?' + str
+            }
+
+            // 最終結果
+            let res
+            // data 需要寫完整的代碼
+            if(data){
+                res = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+            }else{
+                res = await fetch(url)
+            }
+            return res.json()
+        }
+
+        // 實現效果：GET請求
+        async function fn1(){
+            let result = await http({
+                method: 'GET',
+                url: 'http://127.0.0.1:8080/test_fetch_get',
+                params: {
+                    id:3,
+                    // name:'Donald'
+                }
+            })
+            console.log(result)
+        }
+        fn1()
+
+        // 實現效果：POST請求
+        async function fn2(){
+            let result = await http({
+                method: 'POST',
+                url: 'http://127.0.0.1:8080/test_fetch_post',
+                data: {
+                    name:'Donald',
+                    age:18,
+                    gender:'M'
+                }
+            })
+            console.log(result)
+        }
+        fn2()
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_發送POST請求</title>
+</head>
+<body>
+    <!-- <form action="" enctype="application/x-www-form-urlencoded"></form> -->
+    <script>
+        async function add(){
+            let obj = {name:'Donald', age:18, gender: 'M'}
+
+            let res = await fetch('http://127.0.0.1:8080/test_fetch_post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+            console.log(res.json())
+        }
+        add()
+    </script>
+</body>
+</html>

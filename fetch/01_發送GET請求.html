@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_發送GET請求</title>
+</head>
+<body>
+    <h3>01_fetch發送GET請求</h3>
+    <script>
+
+        fetch('http://127.0.0.1:8080/test_fetch_get').then(res => {
+            // 直接得到的 res 是一個 Response 對象，需要通過特定方法獲取其中內容
+            console.log(res)
+            
+            // res.json() 是一個異步操作，表示取出所有內容，並轉換成 JSON 對象
+            // console.log(res.json())
+            return res.json()
+        }).then(json => {
+            // 獲取經過 res.json() 處理過的數據
+            console.log(json);
+        }).catch(err => {
+            // 捕獲錯誤信息
+            console.error(err)
+        })
+
+    </script>
+</body>
+</html>

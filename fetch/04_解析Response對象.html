@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04_解析Response對象</title>
+</head>
+<body>
+    <h3>04_解析Response對象</h3>
+    <script>
+
+        // 把代碼封裝成 async 異步函數
+        async function getData(){
+            try {
+                let res = await fetch('http://127.0.0.1:8080/test_fetch_get?id=1')
+                console.log(res)
+
+                // 屬性
+                console.log(res.ok)     // 返回一個布爾類型，表示請求是否成功
+                console.log(res.status)     // 返回一個數字，表示返回是否成功
+                console.log(res.statusText) // 返回狀態的文本信息
+                console.log(res.url)    // 返回請求地址
+
+                let json = await res.json()
+                console.log(json)
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        getData()
+
+    </script>
+</body>
+</html>

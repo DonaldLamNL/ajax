@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_使用async和await改寫</title>
+</head>
+<body>
+    <h3>02_使用async和await改寫</h3>
+    <script>
+
+        // 把代碼封裝成 async 異步函數
+        async function getData(){
+            // 通過 try...catch 處理 async 和 await 成功和失敗情
+            try {
+                // 先獲取 Response 對象
+                let res = await fetch('http://127.0.0.1:8080/test_fetch_get')
+                console.log(res)
+    
+                // 通過 res.json() 取出 Response 對象中的結果
+                let json = await res.json()
+                console.log(json)
+            } catch (err) {
+                console.error(err)
+            }
+        }
+        getData()
+
+    </script>
+</body>
+</html>

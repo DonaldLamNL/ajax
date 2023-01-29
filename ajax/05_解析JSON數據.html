@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_解析JSON數據</title>
+    <style>
+        #content{
+            width: 300px;
+            height: 100px;
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>該頁面是測試: 解析JSON數據</h3>
+    <button id="btn">發送請求(原生js-ajax-get)</button>  
+    <div id="content"></div>
+    <script>
+        const btn = document.getElementById('btn')
+        const content = document.getElementById('content')
+        btn.onclick = () => {
+            // 實例xhr
+            const xhr = new XMLHttpRequest()
+
+            // 綁定監聽
+            xhr.onreadystatechange = () => {
+                if(xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)){
+                    // const result = JSON.parse(xhr.response)
+                    const {name, age, gender} = xhr.response
+                    content.innerHTML = (`
+                        <ul>
+                            <li>Name: ${name}</li>
+                            <li>Age: ${age}</li>
+                            <li>Gender: ${gender}</li>
+                        </ul>
+                    `)
+                }
+            }
+
+            // 配置請求
+            xhr.open('GET', 'http://127.0.0.1:8080/get_person')
+
+            // responseType 用於指定數據的格式
+            xhr.responseType = 'json'
+
+            // 發送請求
+            xhr.send()
+        }
+    </script>
+</body>
+</html>

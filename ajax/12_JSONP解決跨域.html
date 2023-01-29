@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12_JSONP解決跨域</title>
+</head>
+<body>
+    <button id="btn">Click</button>
+    <script>
+        const btn = document.getElementById('btn')
+        btn.onclick = () => {
+            // 1. 創建 script 節點
+            const scriptNode = document.createElement('script')
+            // 2. 給節點指定 src 屬性
+            scriptNode.src = 'http://127.0.0.1:8080/test_jsonp?callback=test'
+            // 3. 將節點放入頁面
+            document.body.appendChild(scriptNode)
+            // 4. 準備好一個函數
+            window.test = (person) => {
+                console.log(person)
+            }
+            // 5. 移除已經使用過的 script 節點
+            document.body.removeChild(scriptNode)
+        }
+    </script>
+</body>
+<!-- <script src="http://127.0.0.1:8080/test_jsonp"></script> -->
+</html>
